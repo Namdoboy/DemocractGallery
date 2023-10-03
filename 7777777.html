@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Text Styling</title>
+    <style>
+        /* 초기 텍스트 스타일 설정 */
+        #text {
+            font-size: 24px;
+            transition: font-size 0.5s ease, color 0.5s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* 애니메이션 키프레임 설정 */
+        @keyframes circleEffect {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="textInput" placeholder="글을 입력하세요">
+    <div id="text"></div>
+
+    <script>
+        // JavaScript 코드
+        // 무작위 폰트 크기를 생성하는 함수
+        function getRandomFontSize(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // 무작위 색상을 생성하는 함수
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // 입력 필드 이벤트 핸들러
+        document.getElementById('textInput').addEventListener('input', function() {
+            var text = this.value;
+            var textElement = document.getElementById('text');
+
+            // 무작위 폰트 크기와 색상 생성
+            var randomSize = getRandomFontSize(16, 48);
+            var randomColor = getRandomColor();
+
+            // 텍스트 스타일 적용
+            textElement.style.fontSize = randomSize + 'px';
+            textElement.style.color = randomColor;
+
+            // 텍스트를 동그라미 모양으로 커지며 사라지도록 애니메이션 적용
+            textElement.innerText = text;
+            textElement.style.animation = 'circleEffect 1s ease-out';
+
+            // 애니메이션 종료 후 애니메이션 속성 초기화
+            textElement.addEventListener('animationend', function() {
+                textElement.style.animation = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
