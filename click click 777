@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Text Styling</title>
+    <style>
+        /* Initial text style settings */
+        #text {
+            font-size: 24px;
+            transition: font-size 0.5s ease, color 0.5s ease;
+        }
+
+        /* Ripple effect style */
+        .ripple {
+            position: absolute;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: rippleEffect 0.5s linear;
+        }
+
+        /* Keyframes for ripple animation */
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="textInput" placeholder="Type here">
+    <div id="text">Text will appear here</div>
+
+    <script>
+        // JavaScript code
+        // Function to generate a random font size
+        function getRandomFontSize(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Function to generate a random color
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Input field event handler
+        document.getElementById('textInput').addEventListener('input', function() {
+            var text = this.value;
+            var textElement = document.getElementById('text');
+
+            // Generate random font size and color
+            var randomSize = getRandomFontSize(16, 48);
+            var randomColor = getRandomColor();
+
+            // Apply text styling and add ripple effect
+            textElement.style.fontSize = randomSize + 'px';
+            textElement.style.color = randomColor;
+
+            // Create a ripple element and set its position
+            var ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            textElement.appendChild(ripple);
+
+            // Remove the ripple element after the animation ends
+            ripple.addEventListener('animationend', function() {
+                ripple.remove();
+            });
+
+            // Display the entered text
+            textElement.innerText = text;
+        });
+    </script>
+</body>
+</html>
